@@ -1,0 +1,271 @@
+  html, body {
+    font-family: 'Sarabun', sans-serif;
+    margin: 0; padding: 0; height: 100%;
+    background-image: url('https://wallpapersok.com/images/hd/abstract-pastel-color-background-049d25drs8qgnxyn.jpg');
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+  }
+
+  /* Overlay เบลอพื้นหลัง */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    z-index: -1;
+  }
+
+  main {
+    max-width: 1000px;
+    margin: 40px auto 80px;
+    padding: 24px 16px;
+    background: rgba(255 255 255 / 0.85);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgb(0 0 0 / 0.1);
+  }
+
+  h2 {
+    text-align: center;
+    font-weight: 600;
+    font-size: 1.8rem;
+    margin-bottom: 28px;
+    color: #0a0a0a;
+  }
+
+  input[type="text"] {
+    font-family: 'Sarabun', sans-serif;
+    display: block;
+    width: 320px;
+    max-width: 100%;
+    margin: 0 auto 28px auto;
+    padding: 14px 18px;
+    border-radius: 14px;
+    border: 1.5px solid #d1d1d6;
+    font-size: 16px;
+    background: #fff;
+    transition: border-color 0.25s ease, box-shadow 0.25s ease;
+    box-shadow: inset 0 1px 3px rgb(0 0 0 / 0.07);
+  }
+  input[type="text"]:focus {
+    outline: none;
+    border-color: #007aff;
+    box-shadow: 0 0 8px #007affaa;
+  }
+
+  table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0 12px;
+    border-radius: 16px;
+  }
+
+  thead th {
+    background-color: #f2f2f7;
+    color: #6e6e73;
+    font-weight: 600;
+    padding: 14px 10px;
+    border-radius: 12px 12px 0 0;
+    font-size: 14px;
+    text-align: center;
+    user-select: none;
+  }
+
+  tbody tr {
+    background: #fff;
+    box-shadow: 0 1px 3px rgb(60 64 67 / 0.12);
+    border-radius: 14px;
+    transition: box-shadow 0.25s ease;
+  }
+  tbody tr:hover {
+    box-shadow: 0 6px 12px rgb(0 122 255 / 0.2);
+  }
+
+  tbody td {
+    padding: 14px 10px;
+    font-size: 14px;
+    text-align: center;
+    vertical-align: middle;
+    color: #1c1c1e;
+  }
+
+  tbody td:nth-child(2),
+  tbody td:nth-child(3),
+  tbody td:nth-child(4),
+  tbody td:nth-child(5),
+  tbody td:nth-child(6) {
+    font-weight: 600;
+    color: #007aff;
+  }
+
+  tbody td:last-child button {
+    background: linear-gradient(135deg, #0a84ff, #0066cc);
+    border: none;
+    border-radius: 12px;
+    padding: 8px 22px;
+    font-weight: 600;
+    font-size: 14px;
+    color: white;
+    cursor: pointer;
+    box-shadow:
+      0 4px 8px rgb(10 132 255 / 0.6),
+      0 6px 15px rgb(0 102 204 / 0.7);
+    transition: background-color 0.25s ease, box-shadow 0.25s ease;
+  }
+  tbody td:last-child button:hover {
+    background: linear-gradient(135deg, #0066cc, #004b99);
+    box-shadow:
+      0 6px 12px rgb(0 102 204 / 0.8),
+      0 8px 24px rgb(0 70 140 / 0.9);
+  }
+
+  /* Animations for Complete button */
+  @keyframes pulseGradient {
+    0% {
+      background-position: 0% 50%;
+      box-shadow:
+        0 4px 8px rgb(10 132 255 / 0.6),
+        0 6px 15px rgb(0 102 204 / 0.7);
+    }
+    50% {
+      background-position: 100% 50%;
+      box-shadow:
+        0 8px 20px rgb(10 132 255 / 0.8),
+        0 10px 25px rgb(0 102 204 / 0.9);
+    }
+    100% {
+      background-position: 0% 50%;
+      box-shadow:
+        0 4px 8px rgb(10 132 255 / 0.6),
+        0 6px 15px rgb(0 102 204 / 0.7);
+    }
+  }
+
+  tbody td:last-child button.animate-gradient {
+    animation: pulseGradient 1.5s ease-in-out;
+    background: linear-gradient(270deg, #0a84ff, #3399ff, #0a84ff);
+    background-size: 600% 600%;
+  }
+
+  .status-bar-container {
+    width: 100%;
+    height: 22px;
+    background-color: #e5e5ea;
+    border-radius: 12px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .status-bar {
+    height: 100%;
+    transition: width 0.4s ease, background-color 0.4s ease;
+    border-radius: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding-right: 10px;
+    box-sizing: border-box;
+    font-weight: 600;
+    font-size: 13px;
+    color: white;
+    text-shadow: 1px 1px 3px rgba(0,0,0,0.3);
+  }
+
+  .green-bar {
+    background: linear-gradient(90deg, #34c759, #28a745);
+    box-shadow: 0 0 10px #28a745aa;
+  }
+
+  .yellow-bar {
+    background: linear-gradient(90deg, #ffcc00, #cca300);
+    box-shadow: 0 0 10px #cca300aa;
+    color: #1c1c1e;
+    text-shadow: none;
+  }
+
+  .red-bar {
+    background: linear-gradient(90deg, #ff3b30, #b22222);
+    box-shadow: 0 0 12px #b22222aa;
+  }
+
+  .time-cell {
+    font-weight: 600;
+    color: #636366;
+  }
+
+  th:nth-child(7),
+  td:nth-child(7) {
+    display: none;
+  }
+
+  #refreshBtn {
+    position: fixed;
+    bottom: 26px;
+    right: 26px;
+    background: linear-gradient(135deg, #4285f4, #34a853);
+    border-radius: 50%;
+    width: 56px;
+    height: 56px;
+    cursor: pointer;
+    box-shadow:
+      0 5px 12px rgb(66 133 244 / 0.7),
+      0 8px 18px rgb(52 168 83 / 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: box-shadow 0.3s ease, transform 0.2s ease;
+    user-select: none;
+  }
+  #refreshBtn:hover {
+    box-shadow:
+      0 8px 20px rgb(66 133 244 / 0.85),
+      0 12px 26px rgb(52 168 83 / 0.85);
+    transform: scale(1.1);
+  }
+
+  #refreshIcon {
+    width: 28px;
+    height: 28px;
+    stroke: white;
+  }
+  #refreshIcon.spin {
+    animation: spin 1s linear infinite;
+  }
+  @keyframes spin {
+    100% { transform: rotate(360deg); }
+  }
+
+  /* ปุ่ม Report */
+  #reportBtn {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background: linear-gradient(135deg, #ff9800, #f44336);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 20px;
+    font-size: 14px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow:
+      0 4px 8px rgba(244, 67, 54, 0.5),
+      0 6px 15px rgba(255, 152, 0, 0.6);
+    transition: transform 0.2s ease, box-shadow 0.3s ease;
+    z-index: 1000;
+  }
+  #reportBtn:hover {
+    transform: scale(1.05);
+    box-shadow:
+      0 6px 12px rgba(244, 67, 54, 0.7),
+      0 8px 20px rgba(255, 152, 0, 0.8);
+  }
+
+  /* ไล่สีหัวตาราง */
+  #dataTable thead th {
+    background: linear-gradient(135deg, #d6f5f5, #a3e4e4);
+    box-shadow: inset 0 2px 5px rgba(135, 206, 235, 0.3);
+    color: #286363;
+  }

@@ -1,0 +1,47 @@
+﻿<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8" />
+<title>ระบบบันทึกเข้า-ออก</title>
+<!-- Google Font Sarabun -->
+<link href="https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600&display=swap" rel="stylesheet" />
+<!-- SweetAlert2 -->
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<!-- ปุ่ม Report -->
+<button id="reportBtn" title="ดูรายงานและสรุป">ดูรายงาน</button>
+
+<main>
+  <h2>Entry-exit recording system</h2>
+  <input type="text" id="userInput" placeholder="Enter your user code and press." autofocus autocomplete="off" />
+  <table id="dataTable" aria-label="ตารางบันทึกการเข้าออก">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>User</th>
+        <th>Name</th>
+        <th>Status</th>
+        <th>Timeout</th>
+        <th>Status</th>
+        <th>TimeSpent (นาที)</th>
+        <th>Action</th>
+      </tr>
+    </thead>
+    <tbody></tbody>
+  </table>
+</main>
+
+<button id="refreshBtn" title="รีเฟรชข้อมูล" aria-label="รีเฟรชข้อมูล" aria-pressed="false">
+  <svg id="refreshIcon" xmlns="http://www.w3.org/2000/svg" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" viewBox="0 0 24 24">
+    <polyline points="23 4 23 10 17 10"></polyline>
+    <polyline points="1 20 1 14 7 14"></polyline>
+    <path d="M3.51 9a9 9 0 0114.13-3.36L23 10"></path>
+    <path d="M20.49 15a9 9 0 01-14.13 3.36L1 14"></path>
+  </svg>
+</button>
+<script src="JSindex.js"></script>
+</body>
+</html>
