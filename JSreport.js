@@ -1,7 +1,7 @@
 //<link rel="stylesheet" href="style.css">
   //<script src="script.js"></script>
 
-const API_URL = 'https://script.google.com/macros/s/AKfycbxZc4HVXGRVT3H1IRsfkb8PmrmCahIBYaPxQk6uVEt2Dd0P64haRWAjjQP5DU4iMdAmXw/exec';
+        const API_URL = 'https://script.google.com/macros/s/AKfycbxZc4HVXGRVT3H1IRsfkb8PmrmCahIBYaPxQk6uVEt2Dd0P64haRWAjjQP5DU4iMdAmXw/exec';
         let currentData = [];
         let filteredData = [];
         let currentPage = 1;
@@ -10,7 +10,8 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbxZc4HVXGRVT3H1IRsfkb8P
         // Initialize page
         document.addEventListener('DOMContentLoaded', function() {
             setCurrentDate();
-            loadData();
+            // Don't load data automatically - wait for user to click search
+            displayEmptyState();
         });
 
         function setCurrentDate() {
@@ -40,51 +41,72 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbxZc4HVXGRVT3H1IRsfkb8P
             return parseInt(timeSpent) <= 15;
         }
 
-        async function loadData() {
-            try {
-                Swal.fire({
-                    title: 'กำลังโหลดข้อมูล...',
-                    text: 'กรุณารอสักครู่',
-                    allowOutsideClick: false,
-                    allowEscapeKey: false,
-                    showConfirmButton: false,
-                    didOpen: () => {
-                        Swal.showLoading();
-                    }
-                });
-                
-                const response = await fetch(`${API_URL}?action=get`);
-                const data = await response.json();
-                
-                currentData = data.map(item => ({
-                    ...item,
-                    Shift: getShiftFromTime(item.Start),
-                    OnTime: isOnTime(item.TimeSpent)
-                }));
-                
-                displayData(currentData);
-                updateSummary(currentData);
-                
-                Swal.fire({
-                    icon: 'success',
-                    title: 'โหลดข้อมูลสำเร็จ!',
-                    text: `พบข้อมูลทั้งหมด ${currentData.length} รายการ`,
-                    timer: 1500,
-                    showConfirmButton: false
-                });
-                
-            } catch (error) {
-                console.error('Error loading data:', error);
-                Swal.fire({
-                    icon: 'error',
-                    title: 'เกิดข้อผิดพลาด!',
-                    text: 'ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
-                    confirmButtonText: 'ตกลง'
-                });
-            }
+
+
+        function displayEmptyState() {
+            // Clear summary cards
+            document.getElementById('summaryCards').innerHTML = '';
+            
+            // Clear table
+            const tableBody = document.getElementById('dataTable');
+            tableBody.innerHTML = `
+                <tr>
+                    <td colspan="7" class="px-6 py-12 text-center text-gray-500">
+                        <div class="flex flex-col items-center">
+                            <i class="bi bi-search text-4xl mb-4 text-gray-300"></i>
+                            <h3 class="text-lg font-medium mb-2">เลือกวันที่และกดค้นหา</h3>
+                            <p class="text-sm">กรุณาเลือกช่วงวันที่และกดปุ่ม "ค้นหา" เพื่อดูข้อมูล</p>
+                        </div>
+                    </td>
+                </tr>
+            `;
+            
+            // Update pagination info
+            document.getElementById('itemsInfo').textContent = '0-0 จาก 0';
+            document.getElementById('currentPage').textContent = '1';
+            document.getElementById('totalPages').textContent = '1';
+            document.getElementById('pageNumbers').innerHTML = '';
+            document.getElementById('prevBtn').disabled = true;
+            document.getElementById('nextBtn').disabled = true;
         }
 
-        function searchData() {
+        async function searchData() {
+            // First load all data if not loaded yet
+            if (currentData.length === 0) {
+                try {
+                    Swal.fire({
+                        title: 'กำลังโหลดข้อมูล...',
+                        text: 'กรุณารอสักครู่',
+                        allowOutsideClick: false,
+                        allowEscapeKey: false,
+                        showConfirmButton: false,
+                        didOpen: () => {
+                            Swal.showLoading();
+                        }
+                    });
+                    
+                    const response = await fetch(`${API_URL}?action=get`);
+                    const data = await response.json();
+                    
+                    currentData = data.map(item => ({
+                        ...item,
+                        Shift: getShiftFromTime(item.Start),
+                        OnTime: isOnTime(item.TimeSpent)
+                    }));
+                    
+                } catch (error) {
+                    console.error('Error loading data:', error);
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'เกิดข้อผิดพลาด!',
+                        text: 'ไม่สามารถโหลดข้อมูลได้ กรุณาลองใหม่อีกครั้ง',
+                        confirmButtonText: 'ตกลง'
+                    });
+                    return;
+                }
+            }
+
+            // Filter data based on selected criteria
             Swal.fire({
                 title: 'กำลังค้นหาข้อมูล...',
                 text: 'กรุณารอสักครู่',
@@ -224,7 +246,8 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbxZc4HVXGRVT3H1IRsfkb8P
         }
 
         function showDetail(personName) {
-            const personData = currentData.filter(data => data.Name === personName);
+            // Use filtered data instead of all current data to show only selected date range
+            const personData = filteredData.filter(data => data.Name === personName);
             if (!personData.length) return;
             
             document.getElementById('modalTitle').innerHTML = `
@@ -479,7 +502,7 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbxZc4HVXGRVT3H1IRsfkb8P
                     
                     // Generate filename with current date
                     const today = new Date().toISOString().split('T')[0];
-                    const filename = `Smoking Entry-Exit Report_${today}.xlsx`;
+                    const filename = `รายงานกะการทำงาน_${today}.xlsx`;
                     
                     // Save file
                     XLSX.writeFile(wb, filename);
