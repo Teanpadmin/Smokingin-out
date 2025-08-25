@@ -498,11 +498,11 @@
                     const ws = XLSX.utils.json_to_sheet(exportData);
                     
                     // Add worksheet to workbook
-                    XLSX.utils.book_append_sheet(wb, ws, 'ข้อมูลกะการทำงาน');
+                    XLSX.utils.book_append_sheet(wb, ws, 'ข้อมูลเข้าออกสูบบุหรี่');
                     
                     // Generate filename with current date
                     const today = new Date().toISOString().split('T')[0];
-                    const filename = `รายงานกะการทำงาน_${today}.xlsx`;
+                    const filename = `รายงานข้อมูลเข้าออกสูบบุหรี่_${today}.xlsx`;
                     
                     // Save file
                     XLSX.writeFile(wb, filename);
@@ -609,3 +609,4 @@
             currentPage = page;
             renderTable();
         }
+
